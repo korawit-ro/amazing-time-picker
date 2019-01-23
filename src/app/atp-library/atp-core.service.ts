@@ -87,13 +87,14 @@ export class AtpCoreService {
    */
   public CalcDegrees (ele: any, parrentPos: any, step: number): number {
     const clock = {
-      width: ele.currentTarget.offsetWidth,
-      height: ele.currentTarget.offsetHeight
+      width: parrentPos.width,
+      height: parrentPos.height
     };
     const targetX = clock.width / 2;
     const targetY = clock.height / 2;
     const Vx = Math.round((ele.clientX - parrentPos.left) - targetX);
     const Vy = Math.round(targetY - (ele.clientY - parrentPos.top));
+   
     let radians = -Math.atan2(Vy, Vx);
     radians += 2.5 * Math.PI;
 

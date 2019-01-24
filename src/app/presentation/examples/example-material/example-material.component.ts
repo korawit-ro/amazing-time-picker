@@ -37,10 +37,13 @@ export class ExampleMaterialComponent implements OnInit {
 
   public openByTheme (theme: any) {
     const amazingTimePicker = this.atp.open({
-      time: this.selectedTime,
-      theme
+      time: "20:45",
+      theme,
+      is24hour: true,
+      changeToMinutes: true
     });
     amazingTimePicker.afterClose().subscribe(time => {
+      console.log(time);
       this.selectedTime = time;
     });
   }

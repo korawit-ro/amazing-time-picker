@@ -213,8 +213,8 @@ $materialThemeColor: #fff, #fff, #fff, #fff, #fff;
       }
       .time-picker-content{
           .time-picker-clock{
-              width: 200px;
-              height: 200px;
+              width: 240px;
+              height: 240px;
               padding: 24px;
               border-radius: 50%;
               cursor: pointer;
@@ -243,6 +243,12 @@ $materialThemeColor: #fff, #fff, #fff, #fff, #fff;
                   transition: all .2s;
                   z-index: 3;
               }
+              button.sm{
+                
+               // width: 25px;
+               // height: 25px;
+               
+            }
               .time-picker-clock-origin{
                   width: 6px;
                   height: 6px;
@@ -258,7 +264,7 @@ $materialThemeColor: #fff, #fff, #fff, #fff, #fff;
                   height: 41%;
                   position: absolute;
                   left: 0;
-                  top: 22px;
+                  top: 26px;
                   right: 0;
                   margin: auto;
                   -webkit-transform-origin: top left;
@@ -271,6 +277,11 @@ $materialThemeColor: #fff, #fff, #fff, #fff, #fff;
                       top: 0;
                       right: -3px;
                   }
+              }
+
+              .time-picker-clock-arrow.inner {
+                height: 25%;
+                top: 72px;
               }
               &.hide-time-picker-clock{
                 opacity: 0;

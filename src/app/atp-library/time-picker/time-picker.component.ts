@@ -17,6 +17,7 @@ export class TimePickerComponent implements OnInit {
   public activeModal = false;
   public timerElement: any;
   public clockObject: Array<any>;
+  public clockObject24: Array<any>;
   public isClicked: boolean;
   public clockType: 'minute' | 'hour' = 'hour';
   public time: ITime = {
@@ -82,17 +83,18 @@ export class TimePickerComponent implements OnInit {
 
   public ParseStringToTime (time: string): void {
     time = (time === '' || time === undefined || time === null) ? this.time.hour + ':' + this.time.minute : time;
-    this.time = this.core.StringToTime(time);
+    this.time = this.core.StringToTime(time, this.config.is24hour);
   }
 
   public GetTime () {
-    const time = this.core.TimeToString(this.time);
+    const time = this.core.TimeToString(this.time, this.config.is24hour);
     this.subject.next(time);
   }
 
   clockMaker = () => {
     const type = this.clockType;
     this.clockObject = this.core.ClockMaker(type);
+    this.clockObject24 = this.core.ClockMaker24();
     this.setArrow(null);
   }
 
@@ -129,39 +131,38 @@ export class TimePickerComponent implements OnInit {
   getDegree = (ele: any) => {
     const step = this.clockType === 'minute' ? 6 : 30;
     const clockFaceRect = this.clockFace.nativeElement.getBoundingClientRect();
+    
     if (this.isClicked && (ele.currentTarget === ele.target || ele.target.nodeName === 'BUTTON')) {
+      
       const degrees = this.core.CalcDegrees(ele, clockFaceRect, step);
-      let hour = this.time.hour,
-          minute = this.time.minute;
+      const isInnerClick = this.core.isInnerCircleClicked(ele, clockFaceRect, step);
+      if (isInnerClick && this.clockType === 'hour') {
+        let hour = this.time.hour,
+        minute = this.time.minute;
 
-      if (this.clockType === 'hour') {
         hour = (degrees / step);
         hour = (hour > 12) ? hour - 12 : hour;
-      } else if (this.clockType === 'minute') {
-        minute = (degrees / step);
-        minute = (minute > 59) ? minute - 60 : minute;
-      }
 
-      const min = this.config.rangeTime.start,
-            max = this.config.rangeTime.end;
-
-      const nowMinHour = +min.split(':')[0] < 12 ? +min.split(':')[0] : +min.split(':')[0] - 12;
-      const nowMaxHour = +max.split(':')[0] < 12 ? +max.split(':')[0] : +max.split(':')[0] - 12;
-      const nowMinMin = +min.split(':')[1];
-      const nowMaxMin = +max.split(':')[1];
-
-      const nowTime = this.GetNowTime(hour, this.time.ampm, minute);
-      if (this.allowed.indexOf(nowTime) > -1) {
+        this.time.hour = (hour + 12) >= 24 ? 0 : hour + 12;
+        this.rotationClass(degrees);
+        this.setActiveTime();
+        
+      } else {
+        let hour = this.time.hour,
+            minute = this.time.minute;
+  
+        if (this.clockType === 'hour') {
+          hour = (degrees / step);
+          hour = (hour > 12) ? hour - 12 : hour;
+        } else if (this.clockType === 'minute') {
+          minute = (degrees / step);
+          minute = (minute > 59) ? minute - 60 : minute;
+        }
+  
         this.time.hour = hour;
         this.time.minute = minute;
         this.rotationClass(degrees);
         this.setActiveTime();
-      }else if (this.clockType === 'hour' && (hour === nowMinHour && minute <= nowMinMin)) {
-        this.time.hour = nowMinHour;
-        this.time.minute = nowMinMin;
-      }else if (this.clockType === 'hour' && (hour === nowMaxHour && minute >= nowMaxMin)) {
-        this.time.hour = nowMaxHour;
-        this.time.minute = nowMaxMin;
       }
     }
   }
@@ -387,5 +388,12 @@ export class TimePickerComponent implements OnInit {
       defaults.cancel = this.preference.labels.cancel;
     }
     return defaults[key];
+  }
+
+  public IsInnerCircle() {
+   if ((this.time.hour >= 13 || this.time.hour === 0) && this.clockType === 'hour') {
+    return true;
+   }
+    return false;
   }
 }

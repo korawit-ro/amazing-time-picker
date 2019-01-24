@@ -73,8 +73,8 @@ export class AtpCoreService {
 
       items.push({
         time: str,
-        left: (x + r - 17 + 43) + 'px',
-        top: (-y + r - 17 + 43) + 'px',
+        left: (x + r - 17 + 44) + 'px',
+        top: (-y + r - 17 + 42) + 'px',
         type
       });
       

@@ -138,10 +138,17 @@ $materialThemeColor: #fff, #fff, #fff, #fff, #fff;
               background: #ededed;
               > button{
                   color: #000;
-                  &.active{
-                      background: nth($materialThemeBG, $i);
-                      color: nth($materialThemeColor, $i);
-                  }
+              }
+
+              > button.sm {
+                  color: rgba(0,0,0,0.6);
+              }
+
+              > button {
+                &.active{
+                    background: nth($materialThemeBG, $i);
+                    color: nth($materialThemeColor, $i);
+                }
               }
               .time-picker-clock-origin {
                   background: nth($materialThemeBG, $i); 
@@ -173,7 +180,7 @@ $materialThemeColor: #fff, #fff, #fff, #fff, #fff;
       height: auto;
       box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
       border-radius: 2px;
-      margin:15vh auto !important;
+      margin:10vh auto !important;
       transform: scale(0.5) !important;
       transition: transform 0.3s, opacity 0.3s;
       opacity: 0;
@@ -182,7 +189,7 @@ $materialThemeColor: #fff, #fff, #fff, #fff, #fff;
           box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 0 7px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
       }
       &.active{
-          transform: scale(1) !important;
+          transform: scale(0.9) !important;
           opacity: 1;
       }
       .time-picker-header{

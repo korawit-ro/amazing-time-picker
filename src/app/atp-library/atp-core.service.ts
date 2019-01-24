@@ -164,7 +164,7 @@ export class AtpCoreService {
     const Vx = Math.round((ele.clientX - parrentPos.left) - targetX);
     const Vy = Math.round(targetY - (ele.clientY - parrentPos.top));
 
-    const r = 90,
+    const r = targetX * 0.625,
     dist = Math.sqrt(Vx * Vx + Vy * Vy);
 
     if (dist < r) {

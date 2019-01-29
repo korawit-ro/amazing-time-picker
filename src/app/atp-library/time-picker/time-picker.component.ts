@@ -132,7 +132,7 @@ export class TimePickerComponent implements OnInit {
     const step = this.clockType === 'minute' ? 6 : 30;
     const clockFaceRect = this.clockFace.nativeElement.getBoundingClientRect();
     
-    if (this.isClicked && (ele.currentTarget === ele.target || ele.target.nodeName === 'BUTTON')) {
+    if (this.isClicked) {
       
       const degrees = this.core.CalcDegrees(ele, clockFaceRect, step);
       const isInnerClick = this.core.isInnerCircleClicked(ele, clockFaceRect, step);

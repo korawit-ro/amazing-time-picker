@@ -136,7 +136,7 @@ export class TimePickerComponent implements OnInit {
       
       const degrees = this.core.CalcDegrees(ele, clockFaceRect, step);
       const isInnerClick = this.core.isInnerCircleClicked(ele, clockFaceRect, step);
-      if (isInnerClick && this.clockType === 'hour') {
+      if (isInnerClick && this.clockType === 'hour' && this.config.is24hour) {
         let hour = this.time.hour,
         minute = this.time.minute;
 
